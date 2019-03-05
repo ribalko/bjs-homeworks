@@ -12,7 +12,25 @@ function calculateQuadraticEquation(){
 
 function getResult(a,b,c){
     // код для задачи №1 писать здесь
-    //return x;
+    //"use strict";
+    
+    // Вычислим Дискриминант
+    let D = b * b - 4 * a * c;
+    
+    //Найдем корни уравнения
+    if (D > 0) {
+        let x1 = (-b + Math.sqrt(D)) / (2 * a);
+        let x2 = (-b - Math.sqrt(D)) / (2 * a);
+        let x = [x1, x2];
+    }
+    else if () {
+        let x = -b / (2 * a);
+    }
+    else {
+        let x = "Действительных корней нет!";
+    }
+    
+    return x;
 }
 
 function calculateDrinkTask(){
