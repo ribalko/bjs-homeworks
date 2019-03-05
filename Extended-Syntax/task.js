@@ -23,7 +23,7 @@ function getResult(a,b,c){
         let x2 = (-b - Math.sqrt(D)) / (2 * a);
         let x = [x1, x2];
     }
-    else if () {
+    else if (D === 0) {
         let x = -b / (2 * a);
     }
     else {
