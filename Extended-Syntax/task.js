@@ -68,5 +68,11 @@ function calculateAverageRating(){
 
 function getAverageMark(marks){
     // код для задачи №3 писать здесь
-    //return averageMark;
+    let sum = 0;
+    for(let i = 0; i < 5; i++) {
+        sum += marks[i];
+    }
+    averageMark = sum/marks.length;
+    
+    return averageMark;
 }
