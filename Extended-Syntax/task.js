@@ -50,10 +50,10 @@ function askDrink(name,dateOfBirthday){
     today.setFullYear(yearOfBirth);
 
     if ((yearDelta > 18) || ((yearDelta == 18) && (today - dateOfBirthday >= 0))) {
-        result = "Не желаете ли олд-фэшн, <имя пользователя>?";        
+        result = `Не желаете ли олд-фэшн, ${name}?`;        
     }
     else {
-        result = "Сожалею, <имя пользователя>, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!";
+        result = `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
     }
     
     console.log(result)
