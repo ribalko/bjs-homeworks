@@ -1,4 +1,4 @@
-
+"use strict";
 
 function calculateQuadraticEquation(){
     let a = +window.a.value;
@@ -12,7 +12,7 @@ function calculateQuadraticEquation(){
 
 function getResult(a,b,c){
     // код для задачи №1 писать здесь
-    //"use strict";
+    
     
     // Вычислим Дискриминант
     let D = b * b - 4 * a * c;
@@ -42,8 +42,22 @@ function calculateDrinkTask(){
 
 function askDrink(name,dateOfBirthday){
     // код для задачи №2 писать здесь
-    //console.log(result)
-    //return result;
+    let today = new Date();
+    let yearOfBirth = dateOfBirthday.getFullYear();
+    let actualYear = today.getFullYear();
+    let yearDelta = actualYear - yearOfBirth;
+
+    today.setFullYear(yearOfBirth);
+
+    if ((yearDelta > 18) || ((yearDelta == 18) && (today - dateOfBirthday >= 0))) {
+        result = "Не желаете ли олд-фэшн, <имя пользователя>?";        
+    }
+    else {
+        result = "Сожалею, <имя пользователя>, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!";
+    }
+    
+    console.log(result)
+    return result;
 }
 
 function calculateAverageRating(){
