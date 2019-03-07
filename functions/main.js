@@ -17,7 +17,7 @@ function getSolution(a, b, c) {
     }
     else if (D === 0) {
         let x = -b / (2 * a);
-        result.roots: ['x1: ${x1}']
+        result.roots = ['x1: ${x1}']
         result.D = D;
     }
     else {
