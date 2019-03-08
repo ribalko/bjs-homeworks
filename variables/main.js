@@ -15,13 +15,13 @@ let physics = 4;
 
 let disciplineCount = 3;
 
-average = (algebra + geography + physics)/disciplineCount;
+let average = (algebra + geography + physics)/disciplineCount;
 
-console.log(disciplineCount);
+console.log(average);
 
 
 // Task 3
 let name = "Dmitry";
-let message = "Привет, мир! Меня зовут " + name;
+let message = `Привет, мир! Меня зовут ${name}`;
 
 console.log(message);
