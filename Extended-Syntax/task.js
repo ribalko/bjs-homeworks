@@ -27,7 +27,7 @@ function getResult(a,b,c){
         let x = -b / (2 * a);
     }
     else {
-        let x = "Действительных корней нет!";
+        let x = null;
     }
     
     return x;
@@ -68,11 +68,26 @@ function calculateAverageRating(){
 
 function getAverageMark(marks){
     // код для задачи №3 писать здесь
-    let sum = 0;
-    for(let i = 0; i < 5; i++) {
-        sum += marks[i];
-    }
-    averageMark = sum/marks.length;
     
+    if (marks.length === 0) {
+        
+        averageMark = 0;
+
+    else {      
+        
+        let targetCount = 5;
+        let sum = 0;
+
+        if (marks.length > targetCount) {
+            marks.splice(targetCount);    
+        }
+
+        for(let i = 0; i < marks.length; i++) {
+            sum += marks[i];
+        }
+    
+        averageMark = sum/marks.length;
+    }    
+
     return averageMark;
 }
