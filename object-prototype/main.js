@@ -8,6 +8,25 @@ function initCheckBirthday() {
 
 function checkBirthday(birthday) {
     // код для задачи №1 писать здесь
+    let now =  Date.now(); 
+    let birthDate = +new Date(birthday);
+    yearDiff = now.getFullYear() - birthday.getFullYear();
+    if (yearDiff === 18) {
+        now.setFullYear(birthday.getFullYear());
+        diff = (now - birthDate);
+        if (diff > 0) {
+            return "Нет";
+        }
+        else {
+            return "Да";
+        }
+    }
+    else if (yearDiff > 18) {
+        return "Да";
+    }
+    else {
+        return "Нет";
+    }
 }
 
 function initPrintAnimalSound() {
@@ -42,8 +61,9 @@ function initCalculateStatement() {
 
 function getAverageMark(marks) {
     // код для задачи №3 писать здесь
+    let roundedAverage = 0;
+
     if (marks.length === 0) {
-        roundedAverage = 0;
         return roundedAverage;
     }
 
