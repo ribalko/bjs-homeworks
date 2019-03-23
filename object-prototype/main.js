@@ -8,12 +8,11 @@ function initCheckBirthday() {
 
 function checkBirthday(birthday) {
     // код для задачи №1 писать здесь
-    let now =  Date.now(); 
-    let birthDate = +new Date(birthday);
+    let now = new Date(); 
     yearDiff = now.getFullYear() - birthday.getFullYear();
     if (yearDiff === 18) {
         now.setFullYear(birthday.getFullYear());
-        diff = (now - birthDate);
+        diff = (now - birthday);
         if (diff > 0) {
             return "Нет";
         }
