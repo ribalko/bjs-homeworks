@@ -16,7 +16,7 @@ class StudentLog {
             console.log (`ВЫ пытались поставить оценку ${grade} по предмету ${subject}. Допустимый предел: 1-5`);
         }
         else {
-            currentSubject = this.grades[subject];
+            currentSubject = (this.grades[subject] === undefined) ? this.grades[subject][grade] : this.grades[subject];
             currentSubject.push(grade);
         }
         return currentSubject.length;
@@ -201,6 +201,7 @@ class player {
         this.description = 'Игрок';
         this.weapon = new Arm;
         this.name = name;
+        this.position = 0;
     }
 
     getLuck() {
@@ -225,6 +226,84 @@ class player {
 
     isDead() {
         return (this.life === 0) ? true : false;
+    }
+
+    // методы для задачи 3
+
+    moveLeft(distance) {
+        this.position = (distance > this.speed) ? this.position - this.speed : this.position - distance;
+    }
+    
+    moveRight(distance) {
+        this.position = (distance > this.speed) ? this.position + this.speed : this.position + distance;
+    }    
+
+    move(distance) {
+        if (distance > 0) {
+            this.moveLeft(distance);
+        }
+        else {
+            this.moveRight(distance);
+        }
+    }
+
+    isAttackBlocked() {
+       return (this.getLuck() > (100 - this.luck)/100) ? true : false;
+    } 
+
+    dodged() {
+        return (this.getLuck() > (100 - this.agility - this.speed * 3) / 100) ? true : false;
+    }
+
+    takeAttack(damage) {
+        if (this.isAttackBlocked()) {
+            this.weapon.takeDamage();
+        }
+        else if (!enemy.dodged()) {
+            this.getDamge(damage);
+        }
+    }  
+
+    checkWeapon() {
+        if (this.weapon.isBroken()) {
+            this.weapon = this.mainWeapon[this.mainWeapon.indexOf(this.weapon) + 1];
+        }
+    }
+    
+    tryAttack(enemy) {
+        let distance = this.position - enemy.position;
+        if (!(this.weapon.range < Math.abs(distance))) {
+            this.weapon.takeDamage = 10 * this.getLuck();
+            if (distance === 0) {
+                enemy.position = enemy.position + 1;
+                enemy.takeAttack(this.getDamage(distance) * 2);
+            }
+            else {
+                enemy.takeAttack(this.getDamage(distance));                
+            }
+        }
+    
+    }
+
+    chooseEnemy(players) {
+        let enemy = players[0];
+        for (let i = 0; i < players.length; ++i) {
+            if (players[i] == this) {
+                continue;
+            }
+            enemy = (players[i].life > enemy.life) ? players[i] : enemy;
+        }
+        return enemy;
+    }
+
+    moveToEnemy(enemy) {
+        this.move(this.position - enemy.position);
+    }
+
+    turn(players) {
+        let enemy = chooseEnemy(players);
+        moveToEnemy(enemy);
+        tryAttack(enemy);
     }
 
 }
@@ -388,3 +467,23 @@ class demiurge extends player() {
 }
 
 
+function play(players) {
+    for (let i = 0; players.length > 1; i++) {
+        if (!players[i].isDead()) {
+            players[i].turn(players);
+        }
+        else {
+            delete(players[i]);
+        }
+    }
+}
+
+
+play([
+    new warrior({position: 10, name: 'Иван'}),
+    new warrior({position: 12, name: 'Олег'}),
+    new mage({position: 0, name: 'Дима'}),    
+    new archer({position: 20, name: 'Дима'}),
+    new archer({position: 25, name: 'Ильдар'}),
+    new mage({position: 15, name: 'Ольга'})       
+]);
