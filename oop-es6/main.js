@@ -12,19 +12,26 @@ class StudentLog {
     }
 
     addGrade(grade, subject) {
+
+        if (!(subject in this.grades)) {
+          this.grades[subject] = [];
+        }
+
+        let currentSubject = this.grades[subject];
+
         if (isNaN(grade) || (grade < 1) || (grade > 5)) {
-            console.log (`ВЫ пытались поставить оценку ${grade} по предмету ${subject}. Допустимый предел: 1-5`);
+            console.log (`Вы пытались поставить оценку ${grade} по предмету ${subject}. Допустимый предел: 1-5`);
         }
         else {
-            currentSubject = (this.grades[subject] === undefined) ? this.grades[subject][grade] : this.grades[subject];
-            currentSubject.push(grade);
+          currentSubject.push(grade);
         }
-        return currentSubject.length;
+        return currentSubject.length;        
+
     }
 
     getAverageBySubject(subject) {
         if (subject in this.grades) {
-            currentSubject = this.grades[subject];
+            let currentSubject = this.grades[subject];
     
             if (currentSubject.length === 0) {
                 return 0;
@@ -44,7 +51,7 @@ class StudentLog {
         let totalSubjects = 0;
         let averageSum = 0;
         for (let subject in this.grades) {
-            averageSum = this.getAverageBySubject(subject);
+            averageSum += this.getAverageBySubject(subject);
             totalSubjects += 1;
         }
         if (totalSubjects === 0) {
@@ -74,6 +81,28 @@ class StudentLog {
 
 }
 
+let log = new StudentLog('Олег Никифоров');
+
+console.log(log.getName());
+
+console.log(log.addGrade(2,'algebra'));
+console.log(log.addGrade('отлично!','math'));
+console.log(log.addGrade(4,'algebra'));
+console.log(log.addGrade(5,'geometry'));
+console.log(log.addGrade(4,'geometry'));
+console.log(log.addGrade(25,'chemistry'));
+
+console.log(log.getAverageBySubject('algebra'));
+console.log(log.getAverageBySubject('geometry'));
+console.log(log.getAverageBySubject('chemistry'));
+
+console.log(log.getTotalAverage());
+
+console.log(log.getGradesBySubject('algebra'));
+console.log(log.getGradesBySubject('geometry'));
+console.log(log.getGradesBySubject('chemistry'));
+
+console.log(log.getGrades());
 
 
 // Задача 2
