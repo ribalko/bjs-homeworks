@@ -30,21 +30,22 @@ class StudentLog {
     }
 
     getAverageBySubject(subject) {
-        if (subject in this.grades) {
-            let currentSubject = this.grades[subject];
-    
-            if (currentSubject.length === 0) {
-                return 0;
-            }
-            
-            let sum = 0;
-            for(let i = 0; i < currentSubject.length; i++) {
-                sum += currentSubject[i];
-            }
-                
-            return sum/currentSubject.length; 
+        if (!(subject in this.grades)) {
+            return 0;
         }
-        return 0;
+
+        let currentSubject = this.grades[subject];
+    
+        if (currentSubject.length === 0) {
+            return 0;
+        }
+        
+        let sum = 0;
+        for(let i = 0; i < currentSubject.length; i++) {
+            sum += currentSubject[i];
+        }
+            
+        return sum/currentSubject.length;         
     }    
 
     getTotalAverage() {
