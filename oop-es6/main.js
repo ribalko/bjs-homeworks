@@ -104,7 +104,7 @@ console.log(log.getGrades());
 
 // класс оружия
 
-class weapon {
+class Weapon {
     constructor(name) {
         this.attack = 10;
         this.durability = 100;
@@ -113,7 +113,6 @@ class weapon {
 
     takeDamage(damage) {
         this.durability = (this.durability - damage > 0) ? this.durability - damage : 0;
-        return this.durability;
     }
 
     getDamage() {
@@ -129,14 +128,14 @@ class weapon {
     }
 
     isBroken() {
-        return (this.durability === 0) ? true : false;
+        return (this.durability === 0);
     }    
 
 }
 
 // обычное оружие
 
-class arm extends weapon() {
+class Arm extends Weapon {
     constructor() {
         this.name = 'Рука';
         this.attack = 1;
@@ -145,7 +144,7 @@ class arm extends weapon() {
     }    
 }
 
-class bow extends weapon() {
+class Bow extends Weapon {
     constructor() {
         this.name = 'Лук';
         this.attack = 10;
@@ -154,7 +153,7 @@ class bow extends weapon() {
     }    
 }
 
-class sword extends weapon() {
+class Sword extends Weapon {
     constructor() {
         this.name = 'Меч';
         this.attack = 25;
@@ -163,7 +162,7 @@ class sword extends weapon() {
     }    
 }
 
-class knife extends weapon() {
+class Knife extends Weapon {
     constructor() {
         this.name = 'Нож';
         this.attack = 5
@@ -172,7 +171,7 @@ class knife extends weapon() {
     }    
 }
 
-class staff extends weapon() {
+class Staff extends Weapon {
     constructor() {
         this.name = 'Посох';
         this.attack = 8;
@@ -183,7 +182,7 @@ class staff extends weapon() {
 
 // улучшенное оружие
 
-class longBow extends weapon() {
+class LongBow extends Weapon {
     constructor() {
         super(durability);
         this.name = 'Длинный лук';
@@ -192,7 +191,7 @@ class longBow extends weapon() {
     }    
 }
 
-class axe extends weapon() {
+class Axe extends Weapon {
     constructor() {
         super(range);        
         this.name = 'Секира';
@@ -201,7 +200,7 @@ class axe extends weapon() {
     }    
 }
 
-class stormStaff extends weapon() {
+class StormStaff extends Weapon {
     constructor() {
         super(durability);
         this.name = 'Посох Бури';
@@ -213,7 +212,7 @@ class stormStaff extends weapon() {
 
 // класс игрока
 
-class player {
+class Player {
     constructor(name) {
         this.life = 100;
         this.magic = 20;
@@ -222,7 +221,7 @@ class player {
         this.agility = 5;
         this.luck = 10;
         this.description = 'Игрок';
-        this.weapon = new Arm;
+        this.weapon = new Arm();
         this.name = name;
         this.position = 0;
     }
@@ -244,11 +243,10 @@ class player {
 
     takeDamage(damage) {
         this.life = (this.life - damage > 0) ? this.life - damage : 0;
-        return this.life;
     }
 
     isDead() {
-        return (this.life === 0) ? true : false;
+        return (this.life === 0);
     }
 
     // методы для задачи 3
@@ -271,11 +269,11 @@ class player {
     }
 
     isAttackBlocked() {
-       return (this.getLuck() > (100 - this.luck)/100) ? true : false;
+       return (this.getLuck() > (100 - this.luck)/100);
     } 
 
     dodged() {
-        return (this.getLuck() > (100 - this.agility - this.speed * 3) / 100) ? true : false;
+        return (this.getLuck() > (100 - this.agility - this.speed * 3) / 100);
     }
 
     takeAttack(damage) {
@@ -294,8 +292,8 @@ class player {
     }
     
     tryAttack(enemy) {
-        let distance = this.position - enemy.position;
-        if (!(this.weapon.range < Math.abs(distance))) {
+        let distance = Math.abs(this.position - enemy.position);
+        if (!(this.weapon.range < distance)) {
             this.weapon.takeDamage = 10 * this.getLuck();
             if (distance === 0) {
                 enemy.position = enemy.position + 1;
@@ -334,15 +332,15 @@ class player {
 
 // классы бойцов
 
-class warrior extends player() {
+class Warrior extends Player {
     constructor(name) {
         super(name,magic,agility,luck);
         this.life = 120;
         this.speed = 2;
         this.attack = 10;
         this.description = 'Воин';
-        this.weapon = new sword();
-        this.mainWeapon = [sword, knife, arm];
+        this.weapon = new Sword();
+        this.mainWeapon = [Sword, Knife, Arm];
     }
     
     takeDamage(damage) {
@@ -363,7 +361,7 @@ class warrior extends player() {
 }
 
 
-class archer extends player() {
+class Archer extends Player {
     constructor(name) {
         super(name,speed,luck);
         this.life = 80;
@@ -371,13 +369,13 @@ class archer extends player() {
         this.attack = 5;
         this.agility = 10;
         this.description = 'Лучник';
-        this.weapon = new bow();
-        this.mainWeapon = [bow, knife, arm];
+        this.weapon = new Bow();
+        this.mainWeapon = [Bow, Knife, Arm];
     }
 
     getDamage(distance) {
         if (this.weapon.getRange() >= distance) {
-            let damage = (attack + this.weapon.Damage) * this.getLuck() * distance / this.weapon.Range;
+            let damage = (this.attack + this.weapon.Damage) * this.getLuck() * distance / this.weapon.Range;
             return damage;            
         }
         else {
@@ -388,7 +386,7 @@ class archer extends player() {
 }
 
 
-class mage extends player() {
+class Mage extends Player {
     constructor(name) {
         super(name,speed,luck);
         this.life = 70;
@@ -417,7 +415,7 @@ class mage extends player() {
 
 // классы улучшенных бойцов
 
-class dwarf extends warrior() {
+class Dwarf extends Warrior {
     constructor(name) {
         super(name,magic,speed,agility);
         this.life = 130;
@@ -445,7 +443,7 @@ class dwarf extends warrior() {
 }
 
 
-class crossbowman extends player() {
+class Crossbowman extends Player {
     constructor(name) {
         super(name,magic,speed);
         this.life = 85;
@@ -459,13 +457,13 @@ class crossbowman extends player() {
 }
 
 
-class demiurge extends player() {
+class Demiurge extends Player {
     constructor(name) {
         super(name,speed,agility);
         this.life = 80;
         this.magic = 120;
         this.attack = 6;
-        this.aluck = 12;
+        this.luck = 12;
         this.description = 'Демиург';
         this.weapon = new StormStaff();
         this.mainWeapon = [stormStaff, knife, arm];
@@ -503,10 +501,10 @@ function play(players) {
 
 
 play([
-    new warrior({position: 10, name: 'Иван'}),
-    new warrior({position: 12, name: 'Олег'}),
-    new mage({position: 0, name: 'Дима'}),    
-    new archer({position: 20, name: 'Дима'}),
-    new archer({position: 25, name: 'Ильдар'}),
-    new mage({position: 15, name: 'Ольга'})       
+    new Warrior({position: 10, name: 'Иван'}),
+    new Warrior({position: 12, name: 'Олег'}),
+    new Mage({position: 0, name: 'Дима'}),    
+    new Archer({position: 20, name: 'Дима'}),
+    new Archer({position: 25, name: 'Ильдар'}),
+    new Mage({position: 15, name: 'Ольга'})       
 ]);
