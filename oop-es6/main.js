@@ -69,13 +69,6 @@ class StudentLog {
     }
 
     getGrades () {
-        let totalGrades = 0;
-        for (let subject in this.grades) {
-            totalGrades += this.grades[subject].length;
-        }  
-        if (totalGrades === 0) {
-            return {};
-        }
         return this.grades;
     }
 
