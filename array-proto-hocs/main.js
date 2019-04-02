@@ -1,41 +1,36 @@
-function compareArrays(arr1, arr2) {
-  if (arr1.length != arr2.length) return false; 
-  for (let i = 0; i < arr1.length; i ++) {
-    if (arr1[i] != arr2[i]) {
-      return false;
-    } 
-  }
-  return true;
-}
-
+let compareArrays = (arr1, arr2) => (arr1.join() == arr2.join());
 
 function memoize(fn, limit) {
-  const results = memory;
-  // Не получается получить массив аргументов функции за ее пределами
-  // Это вообще реально? :( хотелось бы
-  // const argArray = Array.from(fn.arguments);
-  if (results.length === 0) return fn;
+  
+  const results = [];
+  let prevResultObject = [];
 
-    const prevResultObject = results.filter(param => compareArrays(param.args, argArr));
+  return (function() { 
+    let argArr = Array.from(arguments);
+    if (results.length != 0) {
+      prevResultObject = results.filter(param => compareArrays(param.args, argArr));
+    }
     if (prevResultObject.length > 0) {
       console.log("Результат прочитан из памяти");
       return prevResultObject[0].result;
     }
     else {
-      let result = fn(argArr.join());
-      let resultObject = {argArr,result};
+      let result = fn(...argArr); //ES6 - spread как же долго я это искал
+      let args = argArr;
+      let resultObject = {args,result};
       results.push(resultObject);
       if (results.length > limit) results.shift();
       console.log("Результат вычислен и сохранен в памяти");
       console.log(results);
       return result;
     }
+  });
 
 }
 
-
-const memory = [{args: [3,4] , result: 7}]; // А как еще сохранять историю?
-const sum = (a, b) => Number(a) + Number(b);
-const argArr = [3,5]; // Это не от хорошей жизни
+const sum = (a, b) => a + b;
 const mSum = memoize(sum, 2);
-console.log(mSum);
+console.log(mSum(3,6));
+console.log(mSum(5,2));
+console.log(mSum(3,6));
+console.log(mSum(3,3));
